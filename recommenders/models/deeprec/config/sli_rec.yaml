@@ -33,14 +33,14 @@ train:
     loss : softmax    # pointwise: log_loss, cross_entropy_loss, square_loss  pairwise: softmax
     optimizer : adam  # adam, adadelta, sgd, ftrl, gd, padagrad, pgd, rmsprop
     epochs : 50  #   number of epoch for training
-    batch_size : 400  # batch size, should be constrained as an integer multiple of the number of (1 + train_num_ngs) when need_sample is True
+    batch_size : 900  # batch size, should be constrained as an integer multiple of the number of (1 + train_num_ngs) when need_sample is True
     enable_BN : True  # whether to use batch normalization in hidden layers
     EARLY_STOP : 10 # the number of epoch that controls EARLY STOPPING
     max_seq_length : 50 # the maximum number of records in the history sequence
     hidden_size : 40 # the shape of hidden size used in RNN 
     attention_size : 40 # the shape of attention size
     need_sample: True # whether to perform dynamic negative sampling in mini-batch
-    train_num_ngs: 4 # indicates how many negative instances followed by one positive instances if need_sample is True
+    train_num_ngs: 2 # indicates how many negative instances followed by one positive instances if need_sample is True
 
 #show info
 #metric :'auc', 'logloss', 'group_auc'
