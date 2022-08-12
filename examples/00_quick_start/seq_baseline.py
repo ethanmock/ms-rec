@@ -36,7 +36,7 @@ print("Tensorflow version: {}".format(tf.__version__))
 yaml_file = '../../recommenders/models/deeprec/config/sli_rec.yaml'  
 
 EPOCHS = 10
-BATCH_SIZE = 400
+BATCH_SIZE = 900
 RANDOM_SEED = SEED  # Set None for non-deterministic result
 
 data_path = os.path.join("..", "..", "tests", "resources", "deeprec", "slirec")
@@ -55,9 +55,9 @@ reviews_name = 'reviews_Movies_and_TV_5.json'
 meta_name = 'meta_Movies_and_TV.json'
 reviews_file = os.path.join(data_path, reviews_name)
 meta_file = os.path.join(data_path, meta_name)
-train_num_ngs = 4 # number of negative instances with a positive instance for training
-valid_num_ngs = 4 # number of negative instances with a positive instance for validation
-test_num_ngs = 9 # number of negative instances with a positive instance for testing
+train_num_ngs = 2 # number of negative instances with a positive instance for training
+valid_num_ngs = 2 # number of negative instances with a positive instance for validation
+test_num_ngs = 99 # number of negative instances with a positive instance for testing
 sample_rate = 0.01 # sample a small item set for training and testing here for fast example
 
 input_files = [reviews_file, meta_file, train_file, valid_file, test_file, user_vocab, item_vocab, cate_vocab]
@@ -65,7 +65,7 @@ input_files = [reviews_file, meta_file, train_file, valid_file, test_file, user_
 if not os.path.exists(train_file):
     download_and_extract(reviews_name, reviews_file)
     download_and_extract(meta_name, meta_file)
-    data_preprocessing(*input_files, sample_rate=sample_rate, valid_num_ngs=valid_num_ngs, test_num_ngs=test_num_ngs)
+data_preprocessing(*input_files, sample_rate=sample_rate, valid_num_ngs=valid_num_ngs, test_num_ngs=test_num_ngs)
     #### uncomment this for the NextItNet model, because it does not need to unfold the user history
     # data_preprocessing(*input_files, sample_rate=sample_rate, valid_num_ngs=valid_num_ngs, test_num_ngs=test_num_ngs, is_history_expanding=False)
 

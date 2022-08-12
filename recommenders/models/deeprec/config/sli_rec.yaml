@@ -9,11 +9,11 @@ data:
 model:
     method : classification # classification or regression
     model_type : sli_rec
-    layer_sizes : [100, 64]  # layers' size of DNN. In this example, DNN has two layers, and each layer has 100 hidden nodes.
-    att_fcn_layer_sizes : [80, 40]
-    activation : [relu, relu] # activation function for DNN
+    layer_sizes : [64]  # layers' size of DNN. In this example, DNN has two layers, and each layer has 100 hidden nodes.
+    att_fcn_layer_sizes : [40]
+    activation : [relu] # activation function for DNN
     user_dropout: True 
-    dropout : [0.3, 0.3]  #drop out values for DNN layer
+    dropout : [0.5]  #drop out values for DNN layer
     item_embedding_dim : 32 # the embedding dimension of items
     cate_embedding_dim : 8  # the embedding dimension of categories
     user_embedding_dim : 16 # the embedding dimension of users
