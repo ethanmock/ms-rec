@@ -49,7 +49,7 @@ info:
     save_model: True   # whether to save modl
     save_epoch : 1    # if save_model is set to True, save the model every save_epoch.
     metrics : ['auc','logloss']  # metrics for evaluation.
-    pairwise_metrics : ['mean_mrr', 'ndcg@2;4;6', "group_auc"]  # pairwise metrics for evaluation, available when pairwise comparisons are needed
+    pairwise_metrics : ['mean_mrr', 'ndcg@2;5;10', 'hit@2;5;10', "group_auc"]  # pairwise metrics for evaluation, available when pairwise comparisons are needed
     MODEL_DIR : ./tests/resources/deeprec/slirec/model/slirec_model/ # directory of saved models.
     SUMMARIES_DIR : ./tests/resources/deeprec/slirec/summary/slirec_summary/  # directory of saved summaries.
     write_tfevents : True  # whether to save summaries.
