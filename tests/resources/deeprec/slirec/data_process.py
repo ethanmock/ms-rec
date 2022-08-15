@@ -21,23 +21,21 @@ test = test[['label', 'user', 'item', 'category', 'timestamp']]
 
 print('done')
 
-train['item_cat'] = train['item'] + '_' + train['category']
-all_items = train.item_cat.unique()
-new_train = pd.DataFrame(columns=['label', 'user', 'item', 'category', 'timestamp'])
+print('negative sampling')
+samp = train[['item', 'category']].sample(frac=1).reset_index(drop=True)
+neg_train = train.copy()
+neg_train['item'] = samp['item']
+neg_train['category'] = samp['category']
+neg_train['label'] = 0
 
-# negative sampling
-print('negative sampling...')
-for index, row in train.iterrows():
-    pos = row
-    new_train.loc[len(new_train.index)] = pos
-    neg_items = np.random.choice(all_items, 2)
-    for neg_item in neg_items:
-        item, cat = neg_item.split('_')
-        neg = row
-        neg['item'] = item
-        neg['category'] = cat
-        neg['label'] = 0
-        new_train.loc[len(new_train.index)] = neg
+samp = train[['item', 'category']].sample(frac=1).reset_index(drop=True)
+neg_train2 = train.copy()
+neg_train2['item'] = samp['item']
+neg_train2['category'] = samp['category']
+neg_train2['label'] = 0
+
+new_train = pd.concat( [train, neg_train, neg_train2], axis=0, ignore_index=True)
+
 print('done')
 
 print('generating data...')
