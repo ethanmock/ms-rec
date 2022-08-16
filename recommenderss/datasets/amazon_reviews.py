@@ -40,8 +40,9 @@ def data_preprocessing(
     item_vocab,
     cate_vocab,
     sample_rate=0.01,
-    valid_num_ngs=4,
-    test_num_ngs=9,
+    train_num_ngs=2,
+    valid_num_ngs=2,
+    test_num_ngs=99,
     is_history_expanding=True,
 ):
     """Create data for training, validation and testing from original dataset
@@ -64,7 +65,7 @@ def data_preprocessing(
         )
     _create_vocab(train_file, user_vocab, item_vocab, cate_vocab)
     _negative_sampling_offline(
-        sampled_instance_file, valid_file, test_file, valid_num_ngs, test_num_ngs
+        sampled_instance_file, train_file, valid_file, test_file, train_num_ngs, valid_num_ngs, test_num_ngs
     )
 
 
@@ -135,7 +136,7 @@ def _create_vocab(train_file, user_vocab, item_vocab, cate_vocab):
 
 
 def _negative_sampling_offline(
-    instance_input_file, valid_file, test_file, valid_neg_nums=4, test_neg_nums=49
+    instance_input_file, train_file, valid_file, test_file, train_neg_nums=2, valid_neg_nums=4, test_neg_nums=49
 ):
 
     columns = ["label", "user_id", "item_id", "timestamp", "cate_id"]
@@ -143,6 +144,28 @@ def _negative_sampling_offline(
     items_with_popular = list(ns_df["item_id"])
 
     global item2cate
+
+    # train negative sampling
+    logger.info("start train negative sampling")
+    with open(train_file, "r") as f:
+        train_lines = f.readlines()
+    write_train = open(train_file, "w")
+    for line in train_lines:
+        write_train.write(line)
+        words = line.strip().split("\t")
+        positive_item = words[2]
+        count = 0
+        neg_items = set()
+        while count < valid_neg_nums:
+            neg_item = random.choice(items_with_popular)
+            if neg_item == positive_item or neg_item in neg_items:
+                continue
+            count += 1
+            neg_items.add(neg_item)
+            words[0] = "0"
+            words[2] = neg_item
+            words[3] = item2cate[neg_item]
+            write_train.write("\t".join(words) + "\n")
 
     # valid negative sampling
     logger.info("start valid negative sampling")
