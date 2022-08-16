@@ -395,7 +395,7 @@ def _get_sampled_data(instance_file, sample_rate):
     
     # only use users that have greater than 5 interactions
     v = ns_df.user_id.value_counts()
-    ns_df = ns_df[ns_df.Parameter.isin(v.index[v.gt(5)])]
+    ns_df = ns_df[ns_df.user_id.isin(v.index[v.gt(20)])]
 
     items_num = ns_df["item_id"].nunique()
     items_with_popular = list(ns_df["item_id"])
