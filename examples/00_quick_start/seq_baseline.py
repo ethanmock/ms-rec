@@ -8,12 +8,14 @@ import numpy as np
 import tensorflow.compat.v1 as tf
 tf.get_logger().setLevel('ERROR') # only show error messages
 
+sys.path.append("../../") 
+
 from recommenders.utils.timer import Timer
 from recommenders.utils.constants import SEED
 from recommenders.models.deeprec.deeprec_utils import (
     prepare_hparams
 )
-from recommenders.datasets.amazon_reviews import download_and_extract, data_preprocessing
+from recommenderss.datasets.amazon_reviews import download_and_extract, data_preprocessing
 from recommenders.datasets.download_utils import maybe_download
 
 
@@ -33,7 +35,7 @@ print("System version: {}".format(sys.version))
 print("Tensorflow version: {}".format(tf.__version__))
 
 
-yaml_file = '../../recommenders/models/deeprec/config/sli_rec.yaml'  
+yaml_file = '../../recommenderss/models/deeprec/config/sli_rec.yaml'  
 
 EPOCHS = 20
 BATCH_SIZE = 900
@@ -65,7 +67,8 @@ input_files = [reviews_file, meta_file, train_file, valid_file, test_file, user_
 if not os.path.exists(train_file):
     download_and_extract(reviews_name, reviews_file)
     download_and_extract(meta_name, meta_file)
-    data_preprocessing(*input_files, sample_rate=sample_rate, valid_num_ngs=valid_num_ngs, test_num_ngs=test_num_ngs)
+data_preprocessing(*input_files, sample_rate=sample_rate, valid_num_ngs=valid_num_ngs, test_num_ngs=test_num_ngs)
+exit()
     #### uncomment this for the NextItNet model, because it does not need to unfold the user history
     # data_preprocessing(*input_files, sample_rate=sample_rate, valid_num_ngs=valid_num_ngs, test_num_ngs=test_num_ngs, is_history_expanding=False)
 

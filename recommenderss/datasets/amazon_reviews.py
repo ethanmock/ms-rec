@@ -392,6 +392,11 @@ def _get_sampled_data(instance_file, sample_rate):
     output_file = instance_file + "_" + str(sample_rate)
     columns = ["label", "user_id", "item_id", "timestamp", "cate_id"]
     ns_df = pd.read_csv(instance_file, sep="\t", names=columns)
+    
+    # only use users that have greater than 5 interactions
+    v = ns_df.user_id.value_counts()
+    ns_df = ns_df[ns_df.Parameter.isin(v.index[v.gt(5)])]
+
     items_num = ns_df["item_id"].nunique()
     items_with_popular = list(ns_df["item_id"])
     items_sample, count = set(), 0
