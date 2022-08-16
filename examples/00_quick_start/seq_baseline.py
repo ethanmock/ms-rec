@@ -35,7 +35,7 @@ print("Tensorflow version: {}".format(tf.__version__))
 
 yaml_file = '../../recommenders/models/deeprec/config/sli_rec.yaml'  
 
-EPOCHS = 10
+EPOCHS = 20
 BATCH_SIZE = 900
 RANDOM_SEED = SEED  # Set None for non-deterministic result
 
@@ -65,7 +65,7 @@ input_files = [reviews_file, meta_file, train_file, valid_file, test_file, user_
 if not os.path.exists(train_file):
     download_and_extract(reviews_name, reviews_file)
     download_and_extract(meta_name, meta_file)
-data_preprocessing(*input_files, sample_rate=sample_rate, valid_num_ngs=valid_num_ngs, test_num_ngs=test_num_ngs)
+    data_preprocessing(*input_files, sample_rate=sample_rate, valid_num_ngs=valid_num_ngs, test_num_ngs=test_num_ngs)
     #### uncomment this for the NextItNet model, because it does not need to unfold the user history
     # data_preprocessing(*input_files, sample_rate=sample_rate, valid_num_ngs=valid_num_ngs, test_num_ngs=test_num_ngs, is_history_expanding=False)
 
